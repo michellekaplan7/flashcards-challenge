@@ -1,0 +1,19 @@
+.header {
+  background-color: gainsboro;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header span {
+  font-size: 2rem;
+  margin: 1rem 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+}
+
+.lightning {
+  height: 3rem;
+  margin-right: 1rem;
+}
