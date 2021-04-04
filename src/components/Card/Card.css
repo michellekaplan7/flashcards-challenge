@@ -42,11 +42,16 @@ label.card div {
   cursor: pointer;
 }
 
-.front p,
-.back p {
+.flip-text {
   position: absolute;
   bottom: 0;
   right: 0;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.front p,
+.back p {
   padding: 1rem;
   font-size: 1rem;
 }
