@@ -5,7 +5,7 @@ import {
   getCategories,
 } from "./components/CategorySelection/categorySlice";
 
-import { clues } from "./components/CategorySelection/cluesSlice";
+import { currentCategory } from "./components/CategorySelection/categorySlice";
 import "./App.css";
 
 import Header from "./components/Header/Header";
@@ -13,9 +13,9 @@ import CategorySelection from "./components/CategorySelection/CategorySelection"
 import CardsContainer from "./components/CardsContainer/CardsContainer";
 
 const App = () => {
-  const listOfClues = useSelector(clues);
   const dispatch = useDispatch();
   const categories = useSelector(selectCategoriesList);
+  const selected = useSelector(currentCategory);
 
   // future could add loading state
   // const categoriesStatus = useSelector((state) => state.categories.status);
@@ -27,17 +27,11 @@ const App = () => {
   return (
     <>
       <Header />
-
       <div>
-        {!listOfClues.length ? (
+        {!selected ? (
           <CategorySelection categories={categories} />
         ) : (
-          <>
-            {/* <h2 className="category-header">
-              Your selected category is <span>{`< ${selectedCategory} >`}</span>
-            </h2> */}
-            <CardsContainer />
-          </>
+          <CardsContainer />
         )}
       </div>
     </>
