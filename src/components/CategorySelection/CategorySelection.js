@@ -1,67 +1,35 @@
-// import React from "react";
-// import "./CategorySelection.css";
-// import CategoryBtn from "../CategoryBtn/CategoryBtn";
-
-// import { data } from "../../helpers/data";
-
-// const categoryBtns = data.categories.map((category, i) => {
-//   return <CategoryBtn key={i} name={category} />;
-// });
-
-// const CategorySelection = () => {
-//   return (
-//     <div className="category-selection-container">
-//       <h2>Choose a category...</h2>
-//       <div className="btn-container">{categoryBtns}</div>
-//     </div>
-//   );
-// };
-
-// export default CategorySelection;
-
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-
-import { categorySelection } from "./categorySlice";
+import { getClues } from "../CategorySelection/cluesSlice";
+import CategoryBtn from "../CategoryBtn/CategoryBtn";
 
 import "./CategorySelection.css";
 
-const CategorySelection = () => {
-  const [categorySelected, setCategorySelected] = useState("");
+const CategorySelection = ({ categories }) => {
+  const [categorySelected, setCategorySelected] = useState({});
   const dispatch = useDispatch();
 
-  console.log(categorySelected);
+  console.log({ categorySelected });
+
+  const categoryBtns = categories.map((category, i) => {
+    return (
+      <CategoryBtn
+        key={i}
+        id={category.id}
+        category={category}
+        setCategorySelected={setCategorySelected}
+      />
+    );
+  });
 
   return (
     <div className="category-selection-container">
       <h2>Choose a category...</h2>
-      <div className="btn-container">
-        <button
-          onClick={() => setCategorySelected("geography")}
-          className="geography"
-        >
-          Geography
-        </button>
-        <button
-          onClick={() => setCategorySelected("entertainment")}
-          className="entertainment"
-        >
-          Entertainment
-        </button>
-        <button
-          onClick={() => setCategorySelected("science")}
-          className="science"
-        >
-          Science
-        </button>
-        <button onClick={() => setCategorySelected("all")} className="all">
-          All
-        </button>
-      </div>
+      <div className="btn-container">{categoryBtns}</div>
 
       {categorySelected !== "" && (
         <button
-          onClick={() => dispatch(categorySelection(categorySelected))}
+          onClick={() => dispatch(getClues(categorySelected.id))}
           className="next-btn"
         >
           next
