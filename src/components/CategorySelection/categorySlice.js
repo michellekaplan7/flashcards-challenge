@@ -3,11 +3,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const getCategories = createAsyncThunk(
   "categories/getCategories",
   async ({ count }, { dispatch, getState }) => {
+    let randomOffSet = Math.floor(Math.random() * 100);
+    console.log({ randomOffSet });
     return fetch(
-      `http://jservice.io/api/categories?count=${count}`
+      `http://jservice.io/api/categories?offset=${randomOffSet}&count=${count}`
     ).then((res) => res.json());
   }
 );
+
 const categorySlice = createSlice({
   name: "categories",
   initialState: {
