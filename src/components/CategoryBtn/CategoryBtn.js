@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
-const CategoryBtn = ({ name }) => {
-  const [categorySelected, setCategorySelected] = useState("");
-
-  console.log(categorySelected);
-
+const CategoryBtn = ({ category, setCategorySelected }) => {
   return (
-    <button onClick={() => setCategorySelected(name)} className={name}>
-      {name}
+    <button onClick={() => setCategorySelected(category)}>
+      {category.title}
     </button>
   );
 };
