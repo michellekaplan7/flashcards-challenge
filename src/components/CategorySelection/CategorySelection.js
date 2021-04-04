@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getClues } from "../CategorySelection/cluesSlice";
+// import { getClues } from "../CategorySelection/cluesSlice";
 import CategoryBtn from "../CategoryBtn/CategoryBtn";
+
+import { selectCategory, currentCategory } from "./categorySlice";
+
+// import { useSelector } from "react-redux";
 
 import "./CategorySelection.css";
 
 const CategorySelection = ({ categories }) => {
-  const [categorySelected, setCategorySelected] = useState({});
+  const [categoryChoice, setCategoryChoice] = useState(null);
   const dispatch = useDispatch();
-
-  console.log({ categorySelected });
+  // const selected = useSelector(currentCategory);
 
   const categoryBtns = categories.map((category, i) => {
     return (
@@ -17,7 +20,7 @@ const CategorySelection = ({ categories }) => {
         key={i}
         id={category.id}
         category={category}
-        setCategorySelected={setCategorySelected}
+        setCategoryChoice={setCategoryChoice}
       />
     );
   });
@@ -27,9 +30,9 @@ const CategorySelection = ({ categories }) => {
       <h2>Choose a category...</h2>
       <div className="btn-container">{categoryBtns}</div>
 
-      {categorySelected !== "" && (
+      {categoryChoice && (
         <button
-          onClick={() => dispatch(getClues(categorySelected.id))}
+          onClick={() => dispatch(selectCategory(categoryChoice))}
           className="next-btn"
         >
           next
