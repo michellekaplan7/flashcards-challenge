@@ -1,42 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./CardsContainer.css";
 import Card from "../Card/Card";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { clues } from "../CategorySelection/cluesSlice";
+import { clues, getClues } from "../CategorySelection/cluesSlice";
+
+import { currentCategory } from "../CategorySelection/categorySlice";
 
 const CardsContainer = () => {
   const cluesList = useSelector(clues);
+  const dispatch = useDispatch();
+  const currentCategorySelected = useSelector(currentCategory);
 
-  // const getRandomIndex = () => {
-  //   let random = Math.floor(Math.random() * deck.length);
-  //   return random;
-  // };
+  const shuffle = (arr) => {
+    const array = JSON.parse(JSON.stringify(arr));
 
-  // const shuffle = () => {
-  //   for (let i = deck.length - 1; i >= 0; i--) {
-  //     let randomIndex = getRandomIndex();
-  //     let randomCard = deck.splice(randomIndex, 1);
-  //     let card = randomCard.pop();
-  //     console.log("card", card);
-  //     deck.unshift(card);
-  //   }
-  // };
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
 
-  const flashcards = cluesList.map((card, i) => {
-    return (
-      <Card
-        key={i}
-        id={i}
-        question={card.question}
-        answer={card.answer}
-        category={card.category}
-      />
-    );
-  });
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      // And swap it with the current element.
+      // debugger;
+      temporaryValue = array[currentIndex];
 
-  return <div className="flashcards-container">{flashcards}</div>;
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
+  };
+
+  useEffect(() => {
+    dispatch(getClues(currentCategorySelected.id));
+  }, [currentCategorySelected.id, dispatch]);
+
+  const flashcards = shuffle(cluesList)
+    .slice(0, 6)
+    .map((card, i) => {
+      return (
+        <Card
+          key={i}
+          id={i}
+          question={card.question}
+          answer={card.answer}
+          category={card.category}
+        />
+      );
+    });
+
+  return (
+    <>
+      <h3>Your selected category is {currentCategorySelected.title}</h3>
+      <div className="flashcards-container">{flashcards}</div>
+    </>
+  );
 };
 
 export default CardsContainer;
