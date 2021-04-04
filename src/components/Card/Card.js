@@ -1,24 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Card.css";
 
 const Card = ({ question, answer, id }) => {
+  const [disabled, setDisabled] = useState(false);
+
   return (
     <div className="card-container">
-      <input type="checkbox" id={id} />
+      <input
+        onClick={() => setDisabled(true)}
+        disabled={disabled}
+        type="checkbox"
+        id={id}
+      />
 
       <label className="card" htmlFor={id}>
         <div className="front">
-          {question}
+          <p>{question}</p>
+
           <div>
             <p>Click to flip</p>
           </div>
         </div>
 
         <div className="back">
-          {answer}
-          <div>
-            <p>Click to flip</p>
-          </div>
+          <p>{answer}</p>
         </div>
       </label>
     </div>
