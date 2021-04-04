@@ -1,56 +1,42 @@
-// import React from "react";
-// import "./CardContainer.css";
-// import Card from "../Card/Card";
-
-// import { data } from "../../helpers/data";
-
-// const flashcards = data.cards.map((card, i) => {
-//   return (
-//     <Card
-//       key={i}
-//       question={card.question}
-//       answer={card.answer}
-//       category={card.category}
-//     />
-//   );
-// });
-
-// const CardContainer = () => {
-//   return (
-//     <div className="category-selection-container">
-//       <h2>Cards</h2>
-//       <div className="btn-container">{flashcards}</div>
-//     </div>
-//   );
-// };
-
-// export default CardContainer;
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./CardsContainer.css";
 import Card from "../Card/Card";
 
-import { data } from "../../helpers/data";
+import { useSelector } from "react-redux";
 
-const flashcards = data.cards.map((card, i) => {
-  return (
-    <Card
-      key={i}
-      id={i}
-      question={card.question}
-      answer={card.answer}
-      category={card.category}
-    />
-  );
-});
+import { clues } from "../CategorySelection/cluesSlice";
 
 const CardsContainer = () => {
-  return (
-    <div className="flashcards-container">
-      <h2>Cards</h2>
-      {flashcards}
-    </div>
-  );
+  const cluesList = useSelector(clues);
+
+  // const getRandomIndex = () => {
+  //   let random = Math.floor(Math.random() * deck.length);
+  //   return random;
+  // };
+
+  // const shuffle = () => {
+  //   for (let i = deck.length - 1; i >= 0; i--) {
+  //     let randomIndex = getRandomIndex();
+  //     let randomCard = deck.splice(randomIndex, 1);
+  //     let card = randomCard.pop();
+  //     console.log("card", card);
+  //     deck.unshift(card);
+  //   }
+  // };
+
+  const flashcards = cluesList.map((card, i) => {
+    return (
+      <Card
+        key={i}
+        id={i}
+        question={card.question}
+        answer={card.answer}
+        category={card.category}
+      />
+    );
+  });
+
+  return <div className="flashcards-container">{flashcards}</div>;
 };
 
 export default CardsContainer;
