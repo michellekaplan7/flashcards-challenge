@@ -49,27 +49,3 @@ button:focus {
 .category-selection-container h2 {
   margin: 0 0 4rem 0;
 }
-
-.geography {
-  background: center/15% url(../../assets/images/geography.svg);
-  background-repeat: no-repeat;
-  background-position: 14px 9px;
-}
-
-.entertainment {
-  background: center/15% url(../../assets/images/entertainment.svg);
-  background-repeat: no-repeat;
-  background-position: 14px 9px;
-}
-
-.science {
-  background: center/15% url(../../assets/images/science.svg);
-  background-repeat: no-repeat;
-  background-position: 14px 9px;
-}
-
-.all {
-  background: center/15% url(../../assets/images/all.svg);
-  background-repeat: no-repeat;
-  background-position: 14px 9px;
-}
