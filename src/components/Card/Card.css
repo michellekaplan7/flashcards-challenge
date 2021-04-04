@@ -1,0 +1,82 @@
+/* CARD FLIP STYLES */
+
+.card-container {
+  width: 430px;
+  height: 260px;
+  perspective: 800px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+label.card {
+  display: block;
+  position: relative; /* #card figure is set to position: absolute. DC*/
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+
+  border: 3px solid white;
+  border-radius: 5px;
+}
+
+label.card div {
+  position: absolute;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 2px;
+}
+
+.front {
+  background: #61dafb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.flip-text {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.front p,
+.back p {
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.back {
+  background: gray;
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* CHECKBOX STYLES */
+
+input[type="checkbox"] {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+/* Or [id*='card']:checked ~ label.card  */
+input[type="checkbox"]:checked ~ label.card {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
