@@ -1,23 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const categorySlice = createSlice({
-  name: "category",
+export const getCategories = createAsyncThunk(
+  "categories/getCategories",
+  async ({ count }, { dispatch, getState }) => {
+    return fetch(
+      `http://jservice.io/api/categories?count=${count}`
+    ).then((res) => res.json());
+  }
+);
+const categorySlice = createSlice({
+  name: "categories",
   initialState: {
-    categoryName: null,
+    list: [],
+    status: null,
   },
-  reducers: {
-    categorySelection: (state, action) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.categoryName = action.payload;
+
+  extraReducers: {
+    [getCategories.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getCategories.fulfilled]: (state, { payload }) => {
+      state.list = payload;
+      state.status = "success";
+    },
+    [getCategories.rejected]: (state, action) => {
+      state.status = "failed";
     },
   },
 });
-
-export const { categorySelection } = categorySlice.actions;
-
-export const selectCategory = (state) => state.category.categoryName;
-
 export default categorySlice.reducer;
+
+export const selectCategoriesList = (state) => state.categories.list;
