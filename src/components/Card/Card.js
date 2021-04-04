@@ -18,7 +18,7 @@ const Card = ({ question, answer, id }) => {
           <p>{question}</p>
 
           <div>
-            <p>Click to flip</p>
+            <p className="flip-text">Click to flip</p>
           </div>
         </div>
 
