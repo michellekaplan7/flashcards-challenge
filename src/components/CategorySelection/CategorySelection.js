@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { getClues } from "../CategorySelection/cluesSlice";
 import CategoryBtn from "../CategoryBtn/CategoryBtn";
 
-import { selectCategory, currentCategory } from "./categorySlice";
-
-// import { useSelector } from "react-redux";
+import { selectCategory } from "../../features/categorySlice";
 
 import "./CategorySelection.css";
 
 const CategorySelection = ({ categories }) => {
   const [categoryChoice, setCategoryChoice] = useState(null);
   const dispatch = useDispatch();
-  // const selected = useSelector(currentCategory);
 
   const categoryBtns = categories.map((category, i) => {
     return (
