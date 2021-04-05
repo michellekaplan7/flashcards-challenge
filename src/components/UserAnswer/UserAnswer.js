@@ -1,16 +1,37 @@
 import React, { useState } from "react";
 import "./UserAnswer.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
-// import { userSelectCorrectAnswer } from "./userSlice";
+import {
+  userSelectCorrectAnswer,
+  userSelectIncorrectAnswer,
+  increaseUserBank,
+  decreaseUserBank,
+} from "../../features/userSlice";
 
-const UserAnswer = () => {
+const UserAnswer = ({ deck, setDeck }) => {
   const dispatch = useDispatch();
 
   const [userAnswerSelection, setUserAnswerSelection] = useState(null);
+  console.log({ userAnswerSelection });
 
   const answerYes = () => setUserAnswerSelection("yes");
   const answerNo = () => setUserAnswerSelection("no");
+
+  const x = () => {
+    if (userAnswerSelection === "yes") {
+      dispatch(userSelectCorrectAnswer(deck[deck.length - 1]));
+      dispatch(increaseUserBank(deck[deck.length - 1].value));
+      setUserAnswerSelection(null);
+    } else if (userAnswerSelection === "no") {
+      dispatch(userSelectIncorrectAnswer(deck[deck.length - 1]));
+      dispatch(decreaseUserBank(deck[deck.length - 1].value));
+      setUserAnswerSelection(null);
+    }
+
+    deck.splice(deck.length - 1, 1);
+    setDeck(deck);
+  };
 
   return (
     <div>
@@ -21,10 +42,7 @@ const UserAnswer = () => {
         <button onClick={answerNo}>No</button>
       </div>
       {userAnswerSelection && (
-        <button
-          // onClick={() => dispatch(userSelectCorrectAnswer(cluesList))}
-          className="btn-next-question"
-        >
+        <button onClick={() => x()} className="btn-next-question">
           Next question
         </button>
       )}
