@@ -106,7 +106,7 @@ const CardsContainer = () => {
         id={i}
         question={card.question}
         answer={card.answer}
-        category={card.category}
+        category={currentCategorySelected.title}
         value={card.value}
       />
     );
