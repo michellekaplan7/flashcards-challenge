@@ -1,68 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Flashcards
 
-## Available Scripts
+A "jeopary" like trivia game where the user can select a category and track the amount of money they've made!
 
-In the project directory, you can run:
+## Introduction
+This website was built with React, React Hooks, and Redux. I used the Redux Toolkit to track global state and used the createAsyncThunk to make API calls to the jService API. 
 
-### `yarn start`
+Thanks for visiting!
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Screenshot
+![flashcards-select-category](https://user-images.githubusercontent.com/56200182/113580114-78658a00-95e2-11eb-9248-4d2a7bc93694.png)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+![flashcards-card](https://user-images.githubusercontent.com/56200182/113580116-78fe2080-95e2-11eb-872d-a57d2fb12311.png)
 
-### `yarn test`
+![flashcards-gameover](https://user-images.githubusercontent.com/56200182/113580117-7996b700-95e2-11eb-8e7c-1b5a0b97ad87.png)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Directions for Use
+- When the user firsts land on the site, they will be prompted to select a category.
+- Once they select a category, they will click next and a list of clues will be fetched and displayed. 
+- Now the user will see the front side of the flashcard with the dollar amount, category, and question. Once the user clicks on the card, they will see the correct answer on the backside of the card.
+- The user can then answer whether they got the question correct or incorrect.
+- Upon clicking the next question button, the dollar value will either be added or subtracted to their bank depending on whether they answered that they got the question correct or incorrect.
+- When the user makes it through the flashcards, they will see a summary screen at the end that shows them the total amount of questions they got correct, a percentage score, along with their final bank. 
+- The user will then see a start over button which will clear out the redux store and take them back to the starting select category screen.
+- Have fun!
 
-### `yarn build`
+## Technology Used
+- React
+- React Hooks
+- Redux
+- Redux ToolKit
+- CSS
+- NPM
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How to run on a local machine with NPM
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+1. Shut down any live servers you currently have running (control + c)
+2. Clone down this repo to your desired location
+3. ```cd``` into the new repo directory
+4. Install the library dependencies by running: ```npm install```
+5. Then, run `npm start` in your terminal
+6. Go to `http://localhost:8080/` and you should see the page there
+7. Then, you can enter `control + c` in your terminal to stop the server at any time
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## This project was created by:
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- [Michelle Kaplan](https://github.com/MichelleKaplan7)
