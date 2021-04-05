@@ -1,20 +1,21 @@
 button {
-  padding: 1rem;
-  width: 15rem;
+  width: 18rem;
   border-radius: 30px;
   font-weight: bold;
   border: 1px solid black;
+  height: 3rem;
 }
 
 button:hover {
   cursor: pointer;
-  background-color: red;
+  background-color: #fec000;
   transition: 200ms;
 }
 
 button:focus {
   outline: none;
-  background-color: green;
+  background-color: #070600;
+  color: white;
 }
 
 .btn-container {
@@ -44,6 +45,7 @@ button:focus {
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  width: 55%;
 }
 
 .category-selection-container h2 {
