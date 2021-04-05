@@ -73,3 +73,8 @@
   font-size: 7rem;
   text-align: center;
 }
+
+.btn-start-over {
+  position: relative;
+  top: 135px;
+}
