@@ -5,11 +5,20 @@ import UserBank from "../UserBank/UserBank";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { clues, getClues, cluesStatus } from "../../features/cluesSlice";
+import {
+  clues,
+  getClues,
+  cluesStatus,
+  resetClues,
+} from "../../features/cluesSlice";
 
-import { currentCategory } from "../../features/categorySlice";
+import { currentCategory, resetCategory } from "../../features/categorySlice";
 
-import { correctAnswers, incorrectAnswers } from "../../features/userSlice";
+import {
+  correctAnswers,
+  incorrectAnswers,
+  resetUser,
+} from "../../features/userSlice";
 
 import {
   userSelectCorrectAnswer,
@@ -31,8 +40,6 @@ const CardsContainer = () => {
   const dispatch = useDispatch();
   const currentCategorySelected = useSelector(currentCategory);
   const [deck, setDeck] = useState([]);
-
-  console.log({ deck, cluesList });
 
   const shuffle = (arr) => {
     const array = JSON.parse(JSON.stringify(arr));
@@ -57,12 +64,11 @@ const CardsContainer = () => {
   };
 
   const [userAnswerSelection, setUserAnswerSelection] = useState(null);
-  console.log({ userAnswerSelection });
 
   const answerYes = () => setUserAnswerSelection("yes");
   const answerNo = () => setUserAnswerSelection("no");
 
-  const x = () => {
+  const answerSelectionHandler = () => {
     if (userAnswerSelection === "yes") {
       dispatch(userSelectCorrectAnswer(deck[deck.length - 1]));
       dispatch(increaseUserBank(deck[deck.length - 1].value));
@@ -77,6 +83,12 @@ const CardsContainer = () => {
     setDeck(deck);
   };
 
+  const resetAll = () => {
+    dispatch(resetCategory());
+    dispatch(resetClues());
+    dispatch(resetUser());
+  };
+
   useEffect(() => {
     dispatch(getClues(currentCategorySelected.id));
   }, [currentCategorySelected.id, dispatch]);
@@ -86,8 +98,6 @@ const CardsContainer = () => {
   }, [cluesList]);
 
   useEffect(() => {}, [deck]);
-
-  console.log("deck in container", deck);
 
   const flashcards = deck.map((card, i) => {
     return (
@@ -129,18 +139,26 @@ const CardsContainer = () => {
             )}
 
             {totalAmountOfQuestions === 5 && (
-              <div className="summary-container">
-                <p>Game over!</p>
-                <p>
-                  {`You answered ${correctAmtOfAnswers}/5 questions right for a score of ${percentageCorrect}% `}
-                </p>
-              </div>
+              <>
+                <div className="summary-container">
+                  <p>Game over!</p>
+                  <p>
+                    {`You answered ${correctAmtOfAnswers}/5 questions right for a score of ${percentageCorrect}% `}
+                  </p>
+                </div>
+                <button onClick={() => resetAll()} className="btn-start-over">
+                  Start over!
+                </button>
+              </>
             )}
           </div>
         )}
 
         {userAnswerSelection && (
-          <button onClick={() => x()} className="btn-next-question">
+          <button
+            onClick={() => answerSelectionHandler()}
+            className="btn-next-question"
+          >
             Next question
           </button>
         )}
