@@ -50,10 +50,34 @@ label.card div {
   font-size: 1rem;
 }
 
-.front p,
-.back p {
+.front-text,
+.back-text {
   padding: 1rem;
   font-size: 1rem;
+  font-weight: bold;
+}
+
+.card-category {
+  padding: 1rem;
+  font-size: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: black;
+  border-radius: 6px;
+  margin-left: 12px;
+  background-color: lightgrey;
+}
+
+.question-value {
+  padding: 1rem;
+  font-size: 1rem;
+  position: absolute;
+  top: 0;
+  color: black;
+  border-radius: 6px;
+  margin-left: 12px;
+  background-color: lightgrey;
 }
 
 .back {
