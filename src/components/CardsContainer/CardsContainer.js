@@ -1,17 +1,33 @@
 import React, { useState, useEffect } from "react";
 import "./CardsContainer.css";
 import Card from "../Card/Card";
+import UserBank from "../UserBank/UserBank";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { clues, getClues } from "../../features/cluesSlice";
+import { clues, getClues, cluesStatus } from "../../features/cluesSlice";
 
 import { currentCategory } from "../../features/categorySlice";
 
-import UserAnswer from "../UserAnswer/UserAnswer";
+import { correctAnswers, incorrectAnswers } from "../../features/userSlice";
+
+import {
+  userSelectCorrectAnswer,
+  userSelectIncorrectAnswer,
+  increaseUserBank,
+  decreaseUserBank,
+} from "../../features/userSlice";
 
 const CardsContainer = () => {
   const cluesList = useSelector(clues);
+  const correctAmtOfAnswers = useSelector(correctAnswers).length;
+  const incorrectAmtOfAnswers = useSelector(incorrectAnswers).length;
+  const totalAmountOfQuestions = correctAmtOfAnswers + incorrectAmtOfAnswers;
+  const percentageCorrect =
+    (correctAmtOfAnswers / totalAmountOfQuestions) * 100;
+
+  const cluesLoadingStatus = useSelector(cluesStatus);
+
   const dispatch = useDispatch();
   const currentCategorySelected = useSelector(currentCategory);
   const [deck, setDeck] = useState([]);
@@ -40,15 +56,40 @@ const CardsContainer = () => {
     return array;
   };
 
+  const [userAnswerSelection, setUserAnswerSelection] = useState(null);
+  console.log({ userAnswerSelection });
+
+  const answerYes = () => setUserAnswerSelection("yes");
+  const answerNo = () => setUserAnswerSelection("no");
+
+  const x = () => {
+    if (userAnswerSelection === "yes") {
+      dispatch(userSelectCorrectAnswer(deck[deck.length - 1]));
+      dispatch(increaseUserBank(deck[deck.length - 1].value));
+      setUserAnswerSelection(null);
+    } else if (userAnswerSelection === "no") {
+      dispatch(userSelectIncorrectAnswer(deck[deck.length - 1]));
+      dispatch(decreaseUserBank(deck[deck.length - 1].value));
+      setUserAnswerSelection(null);
+    }
+
+    deck.splice(deck.length - 1, 1);
+    setDeck(deck);
+  };
+
   useEffect(() => {
     dispatch(getClues(currentCategorySelected.id));
   }, [currentCategorySelected.id, dispatch]);
 
   useEffect(() => {
-    setDeck(shuffle(cluesList));
+    setDeck(shuffle(cluesList).slice(0, 5));
   }, [cluesList]);
 
-  const flashcards = deck.slice(0, 6).map((card, i) => {
+  useEffect(() => {}, [deck]);
+
+  console.log("deck in container", deck);
+
+  const flashcards = deck.map((card, i) => {
     return (
       <Card
         key={i}
@@ -67,8 +108,43 @@ const CardsContainer = () => {
         Your selected category is{" "}
         <span>{`< ${currentCategorySelected.title} >`}</span>
       </h3>
-      <div className="flashcards-container">{flashcards}</div>
-      <UserAnswer />
+      <div className="wrapper">
+        {cluesLoadingStatus === "loading" ? (
+          <p className="loading">Loading...</p>
+        ) : (
+          <div className="flashcards-container">
+            {flashcards}
+            <UserBank />
+            {deck.length && (
+              <div className="user-answer-container">
+                <h4>Did you get this question correct?</h4>
+
+                <button className="btn-answer-selection" onClick={answerYes}>
+                  Yes
+                </button>
+                <button className="btn-answer-selection" onClick={answerNo}>
+                  No
+                </button>
+              </div>
+            )}
+
+            {totalAmountOfQuestions === 5 && (
+              <div className="summary-container">
+                <p>Game over!</p>
+                <p>
+                  {`You answered ${correctAmtOfAnswers}/5 questions right for a score of ${percentageCorrect}% `}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {userAnswerSelection && (
+          <button onClick={() => x()} className="btn-next-question">
+            Next question
+          </button>
+        )}
+      </div>
     </>
   );
 };
