@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectCategoriesList,
-  getCategories,
-} from "./components/CategorySelection/categorySlice";
+import { selectCategoriesList, getCategories } from "./features/categorySlice";
 
-import { currentCategory } from "./components/CategorySelection/categorySlice";
+import { currentCategory } from "./features/categorySlice";
 import "./App.css";
 
 import Header from "./components/Header/Header";
@@ -31,7 +28,9 @@ const App = () => {
         {!selected ? (
           <CategorySelection categories={categories} />
         ) : (
-          <CardsContainer />
+          <>
+            <CardsContainer />
+          </>
         )}
       </div>
     </>
