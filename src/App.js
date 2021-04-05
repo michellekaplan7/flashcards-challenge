@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getCategories({ count: 3 }));
-  }, [dispatch]);
+  }, [dispatch, selected]);
 
   return (
     <>
