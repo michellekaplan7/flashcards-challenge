@@ -2,6 +2,10 @@
 
 A "jeopary" like trivia game where the user can select a category and track the amount of money they've made!
 
+## Link to Live Site
+- [Click here!](https://michellekaplan7.github.io/flashcards-challenge/)
+* Next step is to make website more responsive!
+
 ## Introduction
 This website was built with React, React Hooks, and Redux. I used the Redux Toolkit to track global state and used the createAsyncThunk to make API calls to the jService API. 
 
