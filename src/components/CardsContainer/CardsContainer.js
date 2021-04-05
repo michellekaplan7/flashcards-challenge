@@ -1,17 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./CardsContainer.css";
 import Card from "../Card/Card";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { clues, getClues } from "../CategorySelection/cluesSlice";
+import { clues, getClues } from "../../features/cluesSlice";
 
-import { currentCategory } from "../CategorySelection/categorySlice";
+import { currentCategory } from "../../features/categorySlice";
+
+import UserAnswer from "../UserAnswer/UserAnswer";
 
 const CardsContainer = () => {
   const cluesList = useSelector(clues);
   const dispatch = useDispatch();
   const currentCategorySelected = useSelector(currentCategory);
+  const [deck, setDeck] = useState([]);
+
+  console.log({ deck, cluesList });
 
   const shuffle = (arr) => {
     const array = JSON.parse(JSON.stringify(arr));
@@ -26,7 +31,7 @@ const CardsContainer = () => {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
       // And swap it with the current element.
-      // debugger;
+
       temporaryValue = array[currentIndex];
 
       array[currentIndex] = array[randomIndex];
@@ -39,24 +44,31 @@ const CardsContainer = () => {
     dispatch(getClues(currentCategorySelected.id));
   }, [currentCategorySelected.id, dispatch]);
 
-  const flashcards = shuffle(cluesList)
-    .slice(0, 6)
-    .map((card, i) => {
-      return (
-        <Card
-          key={i}
-          id={i}
-          question={card.question}
-          answer={card.answer}
-          category={card.category}
-        />
-      );
-    });
+  useEffect(() => {
+    setDeck(shuffle(cluesList));
+  }, [cluesList]);
+
+  const flashcards = deck.slice(0, 6).map((card, i) => {
+    return (
+      <Card
+        key={i}
+        id={i}
+        question={card.question}
+        answer={card.answer}
+        category={card.category}
+        value={card.value}
+      />
+    );
+  });
 
   return (
     <>
-      <h3>Your selected category is {currentCategorySelected.title}</h3>
+      <h3 className="selected-category-text">
+        Your selected category is{" "}
+        <span>{`< ${currentCategorySelected.title} >`}</span>
+      </h3>
       <div className="flashcards-container">{flashcards}</div>
+      <UserAnswer />
     </>
   );
 };
