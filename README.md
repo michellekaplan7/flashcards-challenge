@@ -31,6 +31,7 @@ Thanks for visiting!
 - Redux ToolKit
 - CSS
 - NPM
+- jService API
 
 ## How to run on a local machine with NPM
 
