@@ -23,6 +23,11 @@ const userSlice = createSlice({
     decreaseUserBank(state, action) {
       state.bank -= action.payload;
     },
+    resetUser(state, action) {
+      state.answers.correctAnswers = [];
+      state.answers.incorrectAnswers = [];
+      state.bank = 0;
+    },
   },
 });
 
@@ -38,4 +43,5 @@ export const {
   userSelectIncorrectAnswer,
   increaseUserBank,
   decreaseUserBank,
+  resetUser,
 } = userSlice.actions;
