@@ -1,0 +1,12 @@
+.user-answer-container {
+  display: flex;
+  position: absolute;
+  bottom: 80px;
+  left: 261px;
+}
+
+.btn-next-question {
+  position: absolute;
+  right: 70px;
+  top: 352px;
+}

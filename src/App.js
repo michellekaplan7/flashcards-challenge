@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectCategoriesList,
-  getCategories,
-} from "./components/CategorySelection/categorySlice";
+import { selectCategoriesList, getCategories } from "./features/categorySlice";
 
-import { currentCategory } from "./components/CategorySelection/categorySlice";
+import { currentCategory } from "./features/categorySlice";
 import "./App.css";
 
 import Header from "./components/Header/Header";
@@ -17,23 +14,28 @@ const App = () => {
   const categories = useSelector(selectCategoriesList);
   const selected = useSelector(currentCategory);
 
-  // future could add loading state
-  // const categoriesStatus = useSelector((state) => state.categories.status);
+  const categoriesStatus = useSelector((state) => state.categories.status);
 
   useEffect(() => {
     dispatch(getCategories({ count: 3 }));
-  }, [dispatch]);
+  }, [dispatch, selected]);
 
   return (
     <>
       <Header />
-      <div>
-        {!selected ? (
-          <CategorySelection categories={categories} />
-        ) : (
-          <CardsContainer />
-        )}
-      </div>
+      {categoriesStatus === "loading" ? (
+        <p className="loading">Loading...</p>
+      ) : (
+        <div>
+          {!selected ? (
+            <CategorySelection categories={categories} />
+          ) : (
+            <>
+              <CardsContainer />
+            </>
+          )}
+        </div>
+      )}
     </>
   );
 };

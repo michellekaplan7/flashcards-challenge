@@ -4,7 +4,7 @@ export const getCategories = createAsyncThunk(
   "categories/getCategories",
   async ({ count }, { dispatch, getState }) => {
     let randomOffSet = Math.floor(Math.random() * 100);
-    console.log({ randomOffSet });
+
     return fetch(
       `http://jservice.io/api/categories?offset=${randomOffSet}&count=${count}`
     ).then((res) => res.json());
@@ -21,6 +21,11 @@ const categorySlice = createSlice({
   reducers: {
     selectCategory(state, action) {
       state.currentCategory = action.payload;
+    },
+    resetCategory(state, action) {
+      state.list = [];
+      state.status = null;
+      state.currentCategory = null;
     },
   },
 
@@ -43,4 +48,4 @@ export const selectCategoriesList = (state) => state.categories.list;
 
 export const currentCategory = (state) => state.categories.currentCategory;
 
-export const { selectCategory } = categorySlice.actions;
+export const { selectCategory, resetCategory } = categorySlice.actions;

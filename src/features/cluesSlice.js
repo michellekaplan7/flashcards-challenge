@@ -3,7 +3,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const getClues = createAsyncThunk(
   "clues/getClues",
   async (id, { dispatch, getState }) => {
-    console.log({ id });
     return fetch(`http://jservice.io/api/clues?category=${id}`).then((res) =>
       res.json()
     );
@@ -14,6 +13,12 @@ const cluesSlice = createSlice({
   initialState: {
     list: [],
     status: null,
+  },
+  reducers: {
+    resetClues(state, action) {
+      state.list = [];
+      state.status = null;
+    },
   },
   extraReducers: {
     [getClues.pending]: (state, action) => {
@@ -41,3 +46,7 @@ const cluesSlice = createSlice({
 export default cluesSlice.reducer;
 
 export const clues = (state) => state.clues.list;
+
+export const cluesStatus = (state) => state.clues.status;
+
+export const { resetClues } = cluesSlice.actions;
