@@ -1,0 +1,12 @@
+.bank-container {
+  border: 1px solid black;
+  width: 8rem;
+  margin: 0;
+  display: flex;
+  right: 23px;
+  top: 110px;
+  flex-direction: column;
+  background-color: white;
+  align-items: center;
+  position: absolute;
+}
