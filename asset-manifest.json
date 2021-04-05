@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/michellekaplan7/flashcards-challenge/static/css/main.ce07b822.chunk.css",
+    "main.js": "/michellekaplan7/flashcards-challenge/static/js/main.5d26f212.chunk.js",
+    "main.js.map": "/michellekaplan7/flashcards-challenge/static/js/main.5d26f212.chunk.js.map",
+    "runtime-main.js": "/michellekaplan7/flashcards-challenge/static/js/runtime-main.4f2852a6.js",
+    "runtime-main.js.map": "/michellekaplan7/flashcards-challenge/static/js/runtime-main.4f2852a6.js.map",
+    "static/js/2.a7c30487.chunk.js": "/michellekaplan7/flashcards-challenge/static/js/2.a7c30487.chunk.js",
+    "static/js/2.a7c30487.chunk.js.map": "/michellekaplan7/flashcards-challenge/static/js/2.a7c30487.chunk.js.map",
+    "index.html": "/michellekaplan7/flashcards-challenge/index.html",
+    "static/css/main.ce07b822.chunk.css.map": "/michellekaplan7/flashcards-challenge/static/css/main.ce07b822.chunk.css.map",
+    "static/js/2.a7c30487.chunk.js.LICENSE.txt": "/michellekaplan7/flashcards-challenge/static/js/2.a7c30487.chunk.js.LICENSE.txt",
+    "static/media/lightning.ca60f863.svg": "/michellekaplan7/flashcards-challenge/static/media/lightning.ca60f863.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4f2852a6.js",
+    "static/js/2.a7c30487.chunk.js",
+    "static/css/main.ce07b822.chunk.css",
+    "static/js/main.5d26f212.chunk.js"
+  ]
+}
