@@ -15,7 +15,7 @@ const Card = ({ question, answer, value, id }) => {
 
       <label className="card" htmlFor={id}>
         <div className="front">
-          <p>value: {value}</p>
+          <p className="question-value">value: {value}</p>
           <p>{question}</p>
 
           <div>
