@@ -14,8 +14,7 @@ const App = () => {
   const categories = useSelector(selectCategoriesList);
   const selected = useSelector(currentCategory);
 
-  // future could add loading state
-  // const categoriesStatus = useSelector((state) => state.categories.status);
+  const categoriesStatus = useSelector((state) => state.categories.status);
 
   useEffect(() => {
     dispatch(getCategories({ count: 3 }));
@@ -24,15 +23,19 @@ const App = () => {
   return (
     <>
       <Header />
-      <div>
-        {!selected ? (
-          <CategorySelection categories={categories} />
-        ) : (
-          <>
-            <CardsContainer />
-          </>
-        )}
-      </div>
+      {categoriesStatus === "loading" ? (
+        <p className="loading">Loading...</p>
+      ) : (
+        <div>
+          {!selected ? (
+            <CategorySelection categories={categories} />
+          ) : (
+            <>
+              <CardsContainer />
+            </>
+          )}
+        </div>
+      )}
     </>
   );
 };
