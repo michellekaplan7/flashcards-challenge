@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import categoryReducer from "../components/CategorySelection/categorySlice";
-import cluesReducer from "../components/CategorySelection/cluesSlice";
+import categoryReducer from "../features/categorySlice";
+import cluesReducer from "../features/cluesSlice";
+import userReducer from "../features/userSlice";
 
 export default configureStore({
   reducer: {
     categories: categoryReducer,
     clues: cluesReducer,
+    userInfo: userReducer,
   },
 });
