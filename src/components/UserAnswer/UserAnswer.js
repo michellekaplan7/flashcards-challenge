@@ -13,7 +13,6 @@ const UserAnswer = ({ deck, setDeck }) => {
   const dispatch = useDispatch();
 
   const [userAnswerSelection, setUserAnswerSelection] = useState(null);
-  console.log({ userAnswerSelection });
 
   const answerYes = () => setUserAnswerSelection("yes");
   const answerNo = () => setUserAnswerSelection("no");
