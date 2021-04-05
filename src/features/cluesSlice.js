@@ -41,3 +41,5 @@ const cluesSlice = createSlice({
 export default cluesSlice.reducer;
 
 export const clues = (state) => state.clues.list;
+
+export const cluesStatus = (state) => state.clues.status;
