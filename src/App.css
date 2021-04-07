@@ -5,3 +5,35 @@
 .category-header span {
   color: red;
 }
+
+.btn-lets-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+button {
+  width: 18rem;
+  border-radius: 30px;
+  font-weight: bold;
+  border: 1px solid black;
+  height: 3rem;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #fec000;
+  transition: 200ms;
+}
+
+button:focus {
+  outline: none;
+  background-color: #070600;
+  color: white;
+}
+
+.loading {
+  font-size: 7rem;
+  text-align: center;
+}
