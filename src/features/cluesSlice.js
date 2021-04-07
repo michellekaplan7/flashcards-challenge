@@ -23,6 +23,7 @@ const cluesSlice = createSlice({
   name: "clues",
   initialState: {
     arrayOfPayloads: [],
+    values: [200, 400, 600, 800, 1000],
     list: [
       {
         name: "category1",
@@ -86,7 +87,7 @@ const cluesSlice = createSlice({
       state.arrayOfPayloads.forEach((payload) => {
         state.list.forEach((el) => {
           if (payload[0].category_id === el.categoryID) {
-            el.cluesList = payload.map((item) => {
+            el.cluesList = payload.slice(0, 5).map((item) => {
               return {
                 id: item.id,
                 answer: item.answer,
@@ -116,3 +117,5 @@ export const categoryStatus = (state) => state.clues.categoryStatus;
 export const { resetClues } = cluesSlice.actions;
 
 export const cluesList = (state) => state.clues.list;
+
+export const values = (state) => state.clues.values;

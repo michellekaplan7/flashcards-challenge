@@ -3,6 +3,8 @@ import "./CardsContainer.css";
 import Card from "../Card/Card";
 import UserBank from "../UserBank/UserBank";
 
+import Column from "../Column/Column";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -10,6 +12,7 @@ import {
   getClues,
   cluesStatus,
   resetClues,
+  values,
 } from "../../features/cluesSlice";
 
 import { currentCategory, resetCategory } from "../../features/categorySlice";
@@ -27,18 +30,27 @@ import {
   decreaseUserBank,
 } from "../../features/userSlice";
 
-const CardsContainer = () => {
-  const cluesList = useSelector(clues);
+const CardsContainer = ({ listOfClues, clues }) => {
+  const clueValues = useSelector(values);
+  const [answeredQuestions, setAnsweredQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+
+  // const cluesList = useSelector(clues);
   const correctAmtOfAnswers = useSelector(correctAnswers).length;
   const incorrectAmtOfAnswers = useSelector(incorrectAnswers).length;
+
   const totalAmountOfQuestions = correctAmtOfAnswers + incorrectAmtOfAnswers;
   const percentageCorrect =
     (correctAmtOfAnswers / totalAmountOfQuestions) * 100;
 
-  const cluesLoadingStatus = useSelector(cluesStatus);
+  console.log("listOFClues in cardscontainer ", listOfClues);
+
+  console.log("current question", currentQuestion);
+
+  // const cluesLoadingStatus = useSelector(cluesStatus);
 
   const dispatch = useDispatch();
-  const currentCategorySelected = useSelector(currentCategory);
+  // const currentCategorySelected = useSelector(currentCategory);
   const [deck, setDeck] = useState([]);
 
   const shuffle = (arr) => {
@@ -83,87 +95,87 @@ const CardsContainer = () => {
     setDeck(deck);
   };
 
-  const resetAll = () => {
-    dispatch(resetCategory());
-    dispatch(resetClues());
-    dispatch(resetUser());
-  };
+  // const resetAll = () => {
+  //   dispatch(resetCategory());
+  //   dispatch(resetClues());
+  //   dispatch(resetUser());
+  // };
 
-  useEffect(() => {
-    dispatch(getClues(currentCategorySelected.id));
-  }, [currentCategorySelected.id, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getClues(currentCategorySelected.id));
+  // }, [currentCategorySelected.id, dispatch]);
 
-  useEffect(() => {
-    setDeck(shuffle(cluesList).slice(0, 5));
-  }, [cluesList]);
+  // useEffect(() => {
+  //   setDeck(shuffle(cluesList).slice(0, 5));
+  // }, [cluesList]);
 
-  useEffect(() => {}, [deck]);
+  // useEffect(() => {}, [deck]);
 
-  const flashcards = deck.map((card, i) => {
-    return (
-      <Card
-        key={i}
-        id={i}
-        question={card.question}
-        answer={card.answer}
-        category={currentCategorySelected.title}
-        value={card.value}
-      />
-    );
-  });
+  console.log("clues in cardscontainer", clues);
 
   return (
-    <>
-      <h3 className="selected-category-text">
-        Your selected category is{" "}
-        <span>{`< ${currentCategorySelected.title} >`}</span>
-      </h3>
-      <div className="wrapper">
-        {cluesLoadingStatus === "loading" ? (
-          <p className="loading">Loading...</p>
-        ) : (
-          <div className="flashcards-container">
-            {flashcards}
-            <UserBank />
-            {deck.length && (
-              <div className="user-answer-container">
-                <h4>Did you get this question correct?</h4>
+    <div className="game">
+      <div className="game__title">Jeopardy</div>
 
-                <button className="btn-answer-selection" onClick={answerYes}>
-                  Yes
-                </button>
-                <button className="btn-answer-selection" onClick={answerNo}>
-                  No
-                </button>
-              </div>
-            )}
-
-            {totalAmountOfQuestions === 5 && (
-              <>
-                <div className="summary-container">
-                  <p>Game over!</p>
-                  <p>
-                    {`You answered ${correctAmtOfAnswers}/5 questions right for a score of ${percentageCorrect}% `}
-                  </p>
-                </div>
-                <button onClick={() => resetAll()} className="btn-start-over">
-                  Start over!
-                </button>
-              </>
-            )}
-          </div>
-        )}
-
-        {userAnswerSelection && (
-          <button
-            onClick={() => answerSelectionHandler()}
-            className="btn-next-question"
-          >
-            Next question
-          </button>
-        )}
+      <div className="game__board">
+        <table className="board">
+          <colgroup>
+            {clues.map((category) => (
+              <col
+                key={category}
+                style={{ width: `${100 / category.length}%` }}
+              />
+            ))}
+          </colgroup>
+          <thead>
+            <tr>
+              {clues.map((category) => (
+                <th className="board__category" key={category}>
+                  {category.categoryTitle}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {clueValues.map((value, index) => (
+              <tr key={value}>
+                {clues.map((category) => (
+                  <td key={Math.random()} className="board__value">
+                    <div className="board__value-inner">
+                      <button
+                        onClick={() => {
+                          let found = category.cluesList.find(
+                            (clue) => clue.value === value
+                          );
+                          let foundClue = {
+                            ...found,
+                            title: category.categoryTitle,
+                          };
+                          setCurrentQuestion(foundClue);
+                        }}
+                      >
+                        {value}
+                      </button>
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </>
+
+      {currentQuestion && (
+        <Card
+          // key={i}
+          // id={i}
+          question={currentQuestion.question}
+          answer={currentQuestion.answer}
+          category={currentQuestion.title}
+          value={currentQuestion.value}
+        />
+      )}
+    </div>
   );
 };
 

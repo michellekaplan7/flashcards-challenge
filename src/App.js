@@ -15,7 +15,7 @@ import "./App.css";
 
 import Header from "./components/Header/Header";
 // import CategorySelection from "./components/CategorySelection/CategorySelection";
-// import CardsContainer from "./components/CardsContainer/CardsContainer";
+import CardsContainer from "./components/CardsContainer/CardsContainer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const App = () => {
     return clue.cluesList;
   });
 
-  console.log("listOfClues", listOfClues);
+  console.log("listttt in APP", listOfClues);
 
   // const categoriesStatus = useSelector((state) => state.categories.status);
 
@@ -58,7 +58,7 @@ const App = () => {
           ) : statusOfClues === "loading" ? (
             <p className="loading">Loading...</p>
           ) : (
-            <p>hi</p>
+            <CardsContainer clues={clues} listOfClues={listOfClues} />
           )}
         </div>
       )}
