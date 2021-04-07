@@ -1,5 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+export const getCategories = createAsyncThunk(
+  "categories/getCategories",
+  async ({ count }, { dispatch, getState }) => {
+    let randomOffSet = Math.floor(Math.random() * 100);
+
+    return fetch(
+      `http://jservice.io/api/categories?offset=${randomOffSet}&count=${count}`
+    ).then((res) => res.json());
+  }
+);
+
 export const getClues = createAsyncThunk(
   "clues/getClues",
   async (id, { dispatch, getState }) => {
@@ -11,8 +22,31 @@ export const getClues = createAsyncThunk(
 const cluesSlice = createSlice({
   name: "clues",
   initialState: {
-    list: [],
-    status: null,
+    arrayOfPayloads: [],
+    list: [
+      {
+        name: "category1",
+        cluesList: null,
+      },
+      {
+        name: "category2",
+        cluesList: null,
+      },
+      {
+        name: "category3",
+        cluesList: null,
+      },
+      {
+        name: "category4",
+        cluesList: null,
+      },
+      {
+        name: "category5",
+        cluesList: null,
+      },
+    ],
+    categoryStatus: null,
+    cluesStatus: null,
   },
   reducers: {
     resetClues(state, action) {
@@ -21,32 +55,64 @@ const cluesSlice = createSlice({
     },
   },
   extraReducers: {
-    [getClues.pending]: (state, action) => {
-      state.status = "loading";
+    //getCategories
+    [getCategories.pending]: (state, action) => {
+      state.categoryStatus = "loading";
     },
-    [getClues.fulfilled]: (state, { payload }) => {
-      state.list = payload.map((clue) => {
+    [getCategories.fulfilled]: (state, { payload }) => {
+      state.list = payload.map((category, i) => {
         return {
-          id: clue.id,
-          answer: clue.answer,
-          question: clue.question,
-          value: clue.value,
-          categoryID: clue.category_id,
+          categoryNumber: i + 1,
+          categoryID: category.id,
+          categoryTitle: category.title,
         };
       });
 
-      state.status = "success";
+      state.categoryStatus = "success";
+    },
+    [getCategories.rejected]: (state, action) => {
+      state.categoryStatus = "failed";
+    },
+
+    //getClues
+    [getClues.pending]: (state, action) => {
+      state.cluesStatus = "loading";
+    },
+    [getClues.fulfilled]: (state, { payload }) => {
+      console.log("payloadddd", payload);
+
+      state.arrayOfPayloads.push(payload);
+
+      state.arrayOfPayloads.forEach((payload) => {
+        state.list.forEach((el) => {
+          if (payload[0].category_id === el.categoryID) {
+            el.cluesList = payload.map((item) => {
+              return {
+                id: item.id,
+                answer: item.answer,
+                question: item.question,
+                value: item.value,
+                categoryID: item.category_id,
+              };
+            });
+          }
+        });
+      });
+
+      state.cluesStatus = "success";
     },
     [getClues.rejected]: (state, action) => {
-      state.status = "failed";
+      state.cluesStatus = "failed";
     },
   },
 });
 
 export default cluesSlice.reducer;
 
-export const clues = (state) => state.clues.list;
+export const cluesStatus = (state) => state.clues.cluesStatus;
 
-export const cluesStatus = (state) => state.clues.status;
+export const categoryStatus = (state) => state.clues.categoryStatus;
 
 export const { resetClues } = cluesSlice.actions;
+
+export const cluesList = (state) => state.clues.list;

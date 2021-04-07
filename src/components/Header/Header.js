@@ -6,8 +6,8 @@ import lightning from "../../assets/images/lightning.svg";
 const Header = () => {
   return (
     <div className="header">
-      <img alt="lightning-bolt" className="lightning" src={lightning} />
-      <span>Flashcards</span>
+      {/* <img alt="lightning-bolt" className="lightning" src={lightning} /> */}
+      <span>Jeopardy</span>
     </div>
   );
 };
