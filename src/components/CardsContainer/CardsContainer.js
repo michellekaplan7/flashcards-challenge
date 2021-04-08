@@ -45,45 +45,49 @@ const CardsContainer = ({ listOfClues, clues }) => {
 
   console.log("listOFClues in cardscontainer ", listOfClues);
 
-  console.log("current question", currentQuestion);
+  console.log("currentQuestion", currentQuestion);
 
   // const cluesLoadingStatus = useSelector(cluesStatus);
 
   const dispatch = useDispatch();
   // const currentCategorySelected = useSelector(currentCategory);
-  const [deck, setDeck] = useState([]);
+  const [deck, setDeck] = useState(clues);
 
-  const shuffle = (arr) => {
-    const array = JSON.parse(JSON.stringify(arr));
+  console.log("deck", deck);
 
-    var currentIndex = array.length,
-      temporaryValue,
-      randomIndex;
+  // const shuffle = (arr) => {
+  //   const array = JSON.parse(JSON.stringify(arr));
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      // And swap it with the current element.
+  //   var currentIndex = array.length,
+  //     temporaryValue,
+  //     randomIndex;
 
-      temporaryValue = array[currentIndex];
+  //   // While there remain elements to shuffle...
+  //   while (0 !== currentIndex) {
+  //     // Pick a remaining element...
+  //     randomIndex = Math.floor(Math.random() * currentIndex);
+  //     currentIndex -= 1;
+  //     // And swap it with the current element.
 
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  };
+  //     temporaryValue = array[currentIndex];
+
+  //     array[currentIndex] = array[randomIndex];
+  //     array[randomIndex] = temporaryValue;
+  //   }
+  //   return array;
+  // };
 
   const [userAnswerSelection, setUserAnswerSelection] = useState(null);
 
-  const answerYes = () => setUserAnswerSelection("yes");
+  const answerYes = () => {
+    dispatch(increaseUserBank(currentQuestion.value));
+  };
   const answerNo = () => setUserAnswerSelection("no");
 
   const answerSelectionHandler = () => {
     if (userAnswerSelection === "yes") {
-      dispatch(userSelectCorrectAnswer(deck[deck.length - 1]));
-      dispatch(increaseUserBank(deck[deck.length - 1].value));
+      // dispatch(userSelectCorrectAnswer(deck[deck.length - 1]));
+      dispatch(increaseUserBank(currentQuestion.value));
       setUserAnswerSelection(null);
     } else if (userAnswerSelection === "no") {
       dispatch(userSelectIncorrectAnswer(deck[deck.length - 1]));
@@ -117,10 +121,12 @@ const CardsContainer = ({ listOfClues, clues }) => {
     <div className="game">
       <div className="game__title">Jeopardy</div>
 
+      <UserBank />
+
       <div className="game__board">
         <table className="board">
           <colgroup>
-            {clues.map((category) => (
+            {deck.map((category) => (
               <col
                 key={category}
                 style={{ width: `${100 / category.length}%` }}
@@ -129,7 +135,7 @@ const CardsContainer = ({ listOfClues, clues }) => {
           </colgroup>
           <thead>
             <tr>
-              {clues.map((category) => (
+              {deck.map((category) => (
                 <th className="board__category" key={category}>
                   {category.categoryTitle}
                 </th>
@@ -139,7 +145,7 @@ const CardsContainer = ({ listOfClues, clues }) => {
           <tbody>
             {clueValues.map((value, index) => (
               <tr key={value}>
-                {clues.map((category) => (
+                {deck.map((category) => (
                   <td key={Math.random()} className="board__value">
                     <div className="board__value-inner">
                       <button
@@ -163,6 +169,12 @@ const CardsContainer = ({ listOfClues, clues }) => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div>
+        <p>Did you get this correct?</p>
+        <button onClick={answerYes}>Yes</button>
+        <button onClick={answerNo}>No</button>
       </div>
 
       {currentQuestion && (
